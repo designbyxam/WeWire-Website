@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta charset="utf-8">
+<title>WeWire Website</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,300..700&family=Merriweather:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@600&display=swap">
+<style>
+/* Layout: full-bleed brand bands (orange hero, photo drawer, white product rows, orange CTA + footer), content on a 1384px column. Built from the WeWire file "Website - Design Only". Single light theme by design: it is the brand marketing site. */
+:root {
+  --orange: #fd4d01;          /* Live Orange */
+  --amber: #fcb11a;
+  --neon: #edfe34;            /* Accent / Neon */
+  --sky: #0091f0;
+  --sky-light: #97cbff;
+  --ink: #121211;             /* text primary */
+  --ink-2: #454543;           /* text secondary */
+  --black: #000;
+  --white: #fff;
+  --tile: #f7f7f7;
+  --card: #1d1d1d;
+
+  --font-display: "Martina Plantijn", "Test Martina Plantijn", "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Google Sans Flex", "Google Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-figure: "Merriweather", Georgia, serif;
+
+  --col: 1384px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+@font-face { font-family: "Martina Plantijn"; src: local("Test Martina Plantijn"), local("TestMartinaPlantijn-Regular"), local("Martina Plantijn"), local("MartinaPlantijn-Regular"), url("assets/fonts/martina-plantijn-regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Martina Plantijn"; src: local("Test Martina Plantijn Medium"), local("TestMartinaPlantijn-Medium"), local("Martina Plantijn Medium"), local("MartinaPlantijn-Medium"), url("assets/fonts/martina-plantijn-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--white); color: var(--ink); font-family: var(--font-sans); font-size: 16px; font-variation-settings: "GRAD" 0, "ROND" 0, "wdth" 100; overflow-x: clip; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+.wrap { width: 100%; max-width: calc(var(--col) + 128px); margin-inline: auto; padding-left: max(var(--gutter-l), min(64px, 4.2vw)); padding-right: max(var(--gutter-r), min(64px, 4.2vw)); }
+.display { font-family: var(--font-display); font-weight: 400; text-wrap: balance; }
+
+/* ---------- Buttons: brand octagon (cut 8 at 40px, 10 at 48px) ---------- */
+.btn {
+  --cut: 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 48px; padding-inline: 32px;
+  font: 700 16px/1 var(--font-sans); white-space: nowrap; cursor: pointer; border: 0;
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+  transition: filter .2s ease;
+}
+.btn:hover { filter: brightness(.94); }
+.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; clip-path: none; }
+.btn--sm { --cut: 8px; height: 40px; padding-inline: 24px; font-size: 14px; }
+.btn--neon { background: var(--neon); color: var(--black); }
+.btn--orange { background: var(--orange); color: var(--white); }
+.btn--white { background: var(--white); color: var(--black); }
+
+/* ---------- Hero ---------- */
+.fold { position: relative; }
+.hero { position: sticky; top: var(--hero-stick, 0px); z-index: 0; aspect-ratio: 1512 / 1092; min-height: 640px; max-height: 1200px; width: 100%;
+  background: linear-gradient(180deg, #601d00 -28.5%, #fd4d01 47.5%, #ffffff 100%);   /* Figma: dark stop sits above the top edge */ color: var(--white); overflow: hidden; }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 120px; gap: 24px; position: relative; z-index: 2; }
+.nav__logo img { width: 134px; height: auto; }
+.nav__links { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; font-size: 16px; line-height: 1.4; }
+.nav__links a { display: inline-flex; align-items: center; gap: 8px; }
+.nav__links a svg { width: 16px; height: 16px; transition: transform 250ms cubic-bezier(.2, .8, .2, 1); }
+.nav__links a:hover { opacity: .8; }
+.nav__links a:hover svg { transform: translate(2px, 2px); }
+.hero__copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 44px; padding-top: 64px; text-align: center; }
+.hero__title { font-size: clamp(44px, 6.35vw, 96px); line-height: 1.2; letter-spacing: -.04em; }
+.hero__coins { position: absolute; z-index: 1; left: 0; top: 0; width: 100%; height: calc(100% + 12px); max-width: none; object-fit: cover; object-position: 50% 100%; pointer-events: none; }
+
+
+/* ---------- Drawer: slides over the hero; a second scroll plays the stats reveal ---------- */
+:root { --reveal-ease: cubic-bezier(.65, 0, .35, 1); --reveal-ms: 1100ms; }
+.drawer { position: relative; z-index: 1; height: calc(var(--stage-h, 760px) + var(--travel, 1500px)); }
+.drawer__stage { position: sticky; top: 0; height: var(--stage-h, 760px); overflow: hidden; background: #e6dccd; --rev: 0; }
+.drawer__stage.is-revealed { --rev: 1; }
+/* shift: photo slides left on reveal (timed). zoom: photo settles from slightly enlarged as the section arrives (scroll-linked) */
+.drawer__shift { position: absolute; inset: 0; transform: translateX(calc(-409.5px * var(--kc, 1) * var(--rev))); transition: transform var(--reveal-ms) var(--reveal-ease); will-change: transform; }
+.drawer__photo { position: absolute; left: 0; top: var(--ph-top, -80px); width: calc(1773px * var(--kc, 1)); height: calc(920px * var(--kc, 1)); max-width: none; object-fit: fill;
+  transform: scale(var(--zoom)); transform-origin: 0 50%; transition: transform 1400ms cubic-bezier(.22, .9, .3, 1); will-change: transform; }
+/* photo scale states: enlarged before the section arrives, settles on arrival, eases back a little more on the stats reveal */
+.drawer__stage { --zoom: var(--zoom-start, 1.15); }
+.drawer__stage.is-arrived { --zoom: 1; }
+.drawer__stage.is-arrived.is-revealed { --zoom: var(--zoom-reveal, .94); }
+/* hover a stats block: the photo beside it crossfades to one of the globe photos */
+.drawer__swap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.drawer__swap img { position: absolute; top: 0; bottom: 0; left: 0; width: calc(100% - 560px * var(--k, 1) * .6); height: 100%; object-fit: cover; object-position: 50% 50%; opacity: 0; transform: scale(1.06);
+  transition: opacity 600ms ease, transform 1200ms cubic-bezier(.2, .8, .2, 1); }
+.drawer__swap img.on { opacity: 1; transform: none; }
+.stats > div { cursor: default; }
+.drawer__shade { position: absolute; inset: auto 0 0 0; height: 590px; background: linear-gradient(192.28deg, rgba(0,0,0,0) 45.4%, var(--black) 91.6%);
+  opacity: calc(1 - var(--rev)); transition: opacity 600ms ease; }
+.drawer__copy { position: absolute; left: 0; right: 0; bottom: 64px; z-index: 1; color: var(--white);
+  opacity: calc(1 - var(--rev)); transform: translateX(calc(-160px * var(--rev))); transition: opacity 500ms ease, transform var(--reveal-ms) var(--reveal-ease); }
+.drawer__copy .inner { display: flex; flex-direction: column; gap: 44px; align-items: flex-start; }
+.drawer__lede { font-weight: 400; font-size: clamp(26px, 2.53vw, 38.27px); line-height: 1.12; letter-spacing: -.02em; max-width: 692px; }
+.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+/* word-by-word slide in (all headings) */
+.ww-word { display: inline-block; }
+.ww-armed .ww-word { opacity: 0; transform: translateY(.45em); }
+.ww-armed.ww-in .ww-word { opacity: 1; transform: none; transition: opacity 500ms ease, transform 700ms cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i) * 55ms); }
+
+/* stats panel: drawn at Figma size (560 x 761) and zoomed to fit */
+.stats { position: absolute; z-index: 2; top: 0; right: 0; width: 560px; height: calc(var(--stage-h, 760px) / var(--k, 1)); zoom: var(--k, 1); overflow: hidden;
+  background: linear-gradient(180deg, var(--sky), var(--sky-light)); transform: translateX(calc(100% * (1 - var(--rev))));
+  transition: transform var(--reveal-ms) var(--reveal-ease); will-change: transform; }
+.stats__fig { display: block; font-family: var(--font-display); font-weight: 400; font-size: 55.467px; line-height: 1; letter-spacing: -.5547px; text-transform: capitalize; }
+.stats__fig b { font: 400 50px/1 var(--font-figure); }
+.stats .cnt { font-variant-numeric: tabular-nums; }
+.stats__cap { display: block; font-weight: 300; font-size: 20.8px; line-height: 1.4; }
+.stats__top { position: absolute; left: 305px; top: 32px; min-width: 199px; white-space: nowrap; color: var(--white); }
+.stats__neon { position: absolute; left: -90px; bottom: -22px; width: 578px; height: 536px; background: var(--neon); color: var(--black);
+  clip-path: polygon(0 0, calc(100% - 43.5px) 0, 100% 32px, 100% 100%, 0 100%); transform: translateY(calc(110% * (1 - var(--rev))));
+  transition: transform 900ms var(--reveal-ease), translate 350ms cubic-bezier(.2, .8, .2, 1); }
+.stats__black { position: absolute; left: 0; bottom: -27px; width: 425.5px; height: 268px; background: var(--black); color: var(--white);
+  clip-path: polygon(0 0, calc(100% - 43.5px) 0, 100% 32px, 100% 100%, 0 100%); transform: translateY(calc(110% * (1 - var(--rev))));
+  transition: transform 900ms var(--reveal-ease), translate 350ms cubic-bezier(.2, .8, .2, 1); }
+/* stagger in: blue first, then neon, then black. Out: reverse order */
+.is-revealed .stats__neon { transition-delay: 550ms, 0ms; }
+.is-revealed .stats__black { transition-delay: 800ms, 0ms; }
+.drawer__stage:not(.is-revealed) .stats__neon { transition-delay: 150ms, 0ms; }
+/* hover: the block lifts a little */
+.stats__top { transition: translate 350ms cubic-bezier(.2, .8, .2, 1); }
+@media (hover: hover) {
+  .is-revealed .stats__top:hover { translate: 0 -8px; }
+  .is-revealed .stats__neon:hover, .is-revealed .stats__black:hover { translate: 0 -16px; }
+}
+.drawer__stage:not(.is-revealed) .stats { transition-delay: 300ms; }
+.drawer__stage:not(.is-revealed) .drawer__shift { transition-delay: 300ms; }
+.stats__neon .stats__txt { position: absolute; left: 171px; top: 42px; width: 371px; text-align: right; }
+.stats__black .stats__txt { position: absolute; left: 97px; top: 42px; width: 280px; text-align: right; }
+
+/* ---------- Partners: one row, "Trusted by" line on the left, greyscale logos on the right (Figma 9580:6402) ---------- */
+.partners { padding-block: 83px; }
+.partners__row { display: flex; align-items: center; justify-content: space-between; gap: 48px; max-width: 1450px; margin-inline: auto; }
+.partners__lede { flex: none; width: 294px; margin: 0; font-size: 20px; line-height: 1.12; letter-spacing: -.02em; color: var(--black); text-wrap: balance; }
+.partners__logos { display: flex; align-items: center; gap: 66.3px; min-width: 0; }
+.plogo { flex: none; display: block; transition: opacity 380ms ease, transform 500ms cubic-bezier(.2, .8, .2, 1), filter 380ms ease; }
+.plogo img { display: block; width: 100%; height: auto; transition: filter 250ms ease, transform 350ms cubic-bezier(.2, .8, .2, 1); }
+@media (hover: hover) { .plogo:hover img { filter: brightness(.55); transform: translateY(-3px); } }
+.plogo.out { opacity: 0; transform: translateY(10px) scale(.96); filter: blur(4px); }
+.partners__logos.st-armed .plogo { opacity: 0; transform: translateY(24px); }
+.partners__logos.st-armed.st-in .plogo:not(.out) { opacity: 1; transform: none;
+  transition: opacity 600ms ease, transform 800ms cubic-bezier(.2, .8, .2, 1), filter 380ms ease; transition-delay: calc(var(--i) * 80ms), calc(var(--i) * 80ms), 0ms; }
+
+/* ---------- Licences ---------- */
+.licences { padding-top: 96px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+.section-title { font-size: clamp(40px, 4.23vw, 64px); line-height: 1.2; letter-spacing: -.02em; color: var(--black); text-align: center; max-width: none; }
+.markets { display: flex; width: 100%; }   /* no gaps: cards butt together */
+.market { position: relative; flex: 1 1 0; min-width: 0; height: 600px; overflow: hidden; cursor: default; outline: none; }
+.market img { position: absolute; left: 0; top: -30px; width: 100%; height: calc(100% + 60px); object-fit: cover; }
+.market::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.4) 100%); transition: background 700ms ease; }
+.market > span { position: absolute; z-index: 1; right: 43px; bottom: 31px; writing-mode: vertical-rl; transform: rotate(180deg); color: var(--white);
+  font-weight: 300; font-size: clamp(32px, 3.17vw, 48px); line-height: 1; letter-spacing: -.02em; white-space: nowrap; }
+.market__info { position: absolute; z-index: 1; left: 0; right: 0; bottom: 45px; display: flex; flex-direction: column; align-items: center; gap: 21px;
+  color: var(--white); text-align: center; opacity: 0; transform: translateY(16px); pointer-events: none; }
+.market__chip { display: inline-flex; align-items: center; justify-content: center; height: 51px; min-width: 159px; padding: 0 22px 11.4px;
+  font: 300 32px/1 var(--font-display); letter-spacing: -.02em; color: var(--chip-ink, var(--white)); background: var(--chip, var(--orange));
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11.4px), calc(100% - 3.8px) calc(100% - 11.4px), calc(100% - 13.3px) 100%, 13.3px 100%, 3.8px calc(100% - 11.4px), 0 calc(100% - 11.4px)); }
+.market__sub { font-weight: 300; font-size: 24px; line-height: 1; letter-spacing: -.02em; white-space: nowrap; }
+
+/* ---------- Virtual accounts ---------- */
+.accounts { padding-block: 120px; display: flex; flex-direction: column; align-items: center; gap: 72px; }
+.title-64 { font-size: clamp(40px, 4.23vw, 64px); line-height: 1; letter-spacing: -.04em; color: var(--ink); }
+.accounts .title-64 { text-align: center; max-width: 813px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.flags { position: relative; width: 100%; max-width: 1512px; height: 150px; overflow: hidden; }
+.flags__track { position: absolute; inset: 0; }
+/* each flag is placed by script; all the same size, fading toward the edges */
+.flag { position: absolute; left: 0; top: 50%; width: 100px; height: 100px; margin: -50px 0 0 -50px; clip-path: polygon(17.4% 0,82.6% 0,100% 17.4%,100% 82.6%,82.6% 100%,17.4% 100%,0 82.6%,0 17.4%);   /* Figma flag mask: 17.6px cut on a 101px tile */ will-change: transform, opacity; }
+.flag svg { display: block; width: 100%; height: 100%; }
+
+/* ---------- Product rows ---------- */
+.stack { position: relative; }
+/* each product panel pins and the next one slides over it (same feel as the photo section over the hero) */
+.product { position: sticky; top: min(0px, calc(100vh - 640px)); height: 100vh; min-height: 640px; display: flex; align-items: center; padding-block: 48px; overflow: hidden; }
+.product > .wrap { width: 100%; }
+.product--move { background: linear-gradient(180deg, #fd4d01 0%, #fcb11a 100%); z-index: 1; }
+.product--build { background: linear-gradient(180deg, #0091f0 0%, #97cbff 100%); z-index: 2; }
+.product--manage { background: linear-gradient(180deg, #ffab24 0%, #ffffff 100%); z-index: 3; }
+.product .title-64 { color: var(--white); }
+.product .inner { display: flex; align-items: center; justify-content: center; gap: 100px; }
+.product--flip .inner { flex-direction: row-reverse; }
+.product__text { display: flex; flex-direction: column; gap: 24px; min-width: 0; flex: 0 1 560px; }
+.product__text .title-64 { max-width: 559px; }
+.features { display: grid; grid-template-columns: repeat(2, 272px); gap: 16px; text-align: left; }
+.feature { position: relative; height: 154px; padding: 29px 29px 0; background: url("assets/tile.svg") center / 100% 100% no-repeat; }
+.feature img { width: 40px; height: 32px; }
+.feature__arrow { position: absolute; top: 24px; right: 24px; width: 28px; height: 28px; color: var(--ink); opacity: 0; transform: translate(-8px, 8px);
+  transition: opacity 250ms ease, transform 400ms var(--ease-out, ease); pointer-events: none; }
+.feature:hover .feature__arrow { opacity: 1; transform: none; }
+.product--build .feature img, .product--manage .feature img { margin-top: -5px; }
+.feature p { position: absolute; left: 29px; right: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; top: 105px; font-size: 20px; letter-spacing: -.02em; color: var(--ink-2); }
+
+.card { position: relative; flex: 0 1 636px; aspect-ratio: 636 / 539; min-width: 0; overflow: hidden; background: var(--card); container-type: inline-size; }
+.card > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* brand chamfer: both bottom corners cut ~41 x 35 on hover (half the Figma 82 x 70) */
+.card { --cx: 0%; --cy: 0%; clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cy)), calc(100% - var(--cx)) 100%, var(--cx) 100%, 0 calc(100% - var(--cy)));
+  transition: clip-path 600ms cubic-bezier(.6, 0, .2, 1), opacity 700ms ease, transform 900ms cubic-bezier(.2, .8, .2, 1); }
+.card:hover { --cx: 6.4%; --cy: 6.5%; }
+.glass { position: absolute; border-radius: 4px; background: rgba(255,255,255,var(--a, .2)); backdrop-filter: blur(4.8px); -webkit-backdrop-filter: blur(4.8px);
+  box-shadow: inset 0 0 4px rgba(255,255,255,.25); color: var(--white); }
+.u { --s: calc(100cqw / 636); }  /* card units: 1 design px */
+.balance { left: calc(57 * var(--s)); top: calc(72 * var(--s)); width: calc(522 * var(--s)); height: calc(418 * var(--s)); --a: .1; }
+.balance__label { position: absolute; left: calc(30 * var(--s)); top: calc(41 * var(--s)); font-weight: 500; font-size: max(11px, calc(16 * var(--s))); letter-spacing: -.01em; }
+.balance__amt { position: absolute; left: calc(30 * var(--s)); top: calc(65 * var(--s)); line-height: 1; letter-spacing: -.01em; white-space: nowrap; }
+.balance__amt b { font: 500 calc(50 * var(--s))/1 var(--font-figure); }
+.balance__amt span { font: 500 calc(55.66 * var(--s))/1 var(--font-display); }
+.txn { left: calc(84 * var(--s)); width: calc(468 * var(--s)); height: calc(103 * var(--s)); font-size: max(10px, calc(16 * var(--s))); letter-spacing: -.01em; }
+.txn .av { position: absolute; left: calc(22.2 * var(--s)); top: calc(23 * var(--s)); width: calc(65 * var(--s)); height: calc(60 * var(--s)); }
+.txn .who { position: absolute; left: calc(106 * var(--s)); top: calc(23 * var(--s)); display: flex; flex-direction: column; white-space: nowrap; line-height: 1; }
+.txn .who b { font-weight: 500; }
+.txn .who i { font-style: normal; font-weight: 300; }
+.txn .amt { position: absolute; right: calc(27 * var(--s)); text-align: right; font-weight: 500; line-height: 1; }
+.invoice { left: calc(84 * var(--s)); top: calc(192 * var(--s)); width: calc(468 * var(--s)); height: calc(274 * var(--s)); --a: .06; }
+.invoice h3 { position: absolute; left: calc(32 * var(--s)); top: calc(42 * var(--s)); font-weight: 500; font-size: max(12px, calc(20 * var(--s))); line-height: 1; letter-spacing: -.01em; }
+.invoice dl { position: absolute; left: calc(32 * var(--s)); top: calc(87 * var(--s)); width: calc(409 * var(--s)); margin: 0; display: flex; flex-direction: column; gap: calc(17 * var(--s)); }
+.invoice dl div { display: flex; justify-content: space-between; font-size: max(12px, calc(20 * var(--s))); line-height: 1; letter-spacing: -.01em; padding-bottom: calc(17 * var(--s)); border-bottom: 1px solid rgba(255,255,255,.35); }
+.invoice dl div:last-child { border-bottom: 0; padding-bottom: 0; }
+.invoice dt, .invoice dd { margin: 0; }
+
+/* ---------- Engine ---------- */
+.engine { padding-top: 118px; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; }
+.title-80 { font-size: clamp(44px, 5.3vw, 80px); line-height: .9; letter-spacing: -.04em; color: var(--black); }
+.engine .title-80 { max-width: 781px; }
+.engine__sub { margin-top: 16px; max-width: 612px; font-weight: 300; font-size: 18px; line-height: 24px; color: var(--black); }
+.engine__globe { position: relative; width: 100%; max-width: 1512px; height: clamp(420px, 52vw, 720px); margin-top: 24px; cursor: grab; touch-action: pan-y; }
+.engine__globe.is-dragging { cursor: grabbing; }
+.engine__globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
+.engine__hint { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); font-size: 13px; font-weight: 400; letter-spacing: .04em; color: var(--ink-2);
+  opacity: .0; transition: opacity 400ms ease; pointer-events: none; }
+.engine__globe:hover .engine__hint { opacity: .7; }
+.engine__globe.no-gl { background: url("assets/globe.webp") center bottom / contain no-repeat; cursor: default; }
+
+/* ---------- Featured marquee ---------- */
+.featured { padding-block: 176px 130px; overflow: hidden; }
+.featured .title-80 { text-align: center; }
+.marquee { margin-top: 93px; padding-left: max(var(--gutter-l), 62px); }
+.marquee { cursor: grab; touch-action: pan-y; user-select: none; }
+.marquee.is-dragging { cursor: grabbing; }
+.marquee__track { display: flex; gap: 60px; width: max-content; align-items: flex-start; will-change: transform; }
+@keyframes marquee { to { transform: translateX(-1740px); } }
+.press { width: 375px; display: flex; flex-direction: column; gap: 18px; }
+.press__media { width: 352px; overflow: hidden; clip-path: polygon(0 0, 100% 0, 100% 100%, 28px 100%, 0 calc(100% - 34px)); }
+.press img { width: 352px; height: auto; -webkit-user-drag: none; user-select: none; }
+.press h3 { font-weight: 500; font-size: 24px; line-height: 1.2; letter-spacing: -.01em; color: var(--black); }
+.press p { margin-top: 8px; font-weight: 300; font-size: 14px; line-height: 1.4; color: var(--black); }
+
+/* ---------- CTA ---------- */
+.cta { position: relative; overflow: hidden; min-height: 806px; background: linear-gradient(2.99deg, var(--orange) 3.79%, var(--amber) 94.83%);
+  /* one 1847x946 coin-box scene runs across the CTA and the top of the footer: same width + x in both, bottom 163px spills into the footer */
+  --scene-w: min(1847px, 122.16vw); --scene-x: calc(50% - min(157.66px, 10.43vw)); --scene-drop: min(163px, 10.78vw); }
+.footer { --scene-w: min(1847px, 122.16vw); --scene-x: calc(50% - min(157.66px, 10.43vw)); --scene-drop: min(163px, 10.78vw); }
+.cta__scene, .footer__scene { position: absolute; left: var(--scene-x); width: var(--scene-w); max-width: none; height: auto; pointer-events: none; transform: translateX(-50%); }
+.cta__scene { bottom: calc(-1 * var(--scene-drop)); }
+.footer__scene { top: var(--scene-drop); transform: translate(-50%, -100%); }
+.cta .inner { position: relative; display: flex; justify-content: flex-end; padding-top: 304px; padding-bottom: 96px; }
+.cta__copy { width: min(715px, 100%); display: flex; flex-direction: column; gap: 42px; align-items: flex-start; margin-right: clamp(0px, 5vw, 78px); }
+.cta__title { font-size: clamp(44px, 5.29vw, 80px); line-height: 1.1375; letter-spacing: -.04em; color: var(--white); }
+.cta .btn { height: 50.6px; font-size: 16.86px; padding-inline: 33.7px; }
+
+/* ---------- Footer ---------- */
+.footer { position: relative; overflow: hidden; background: var(--orange); padding-block: 125px 0; }
+.footer__panel { position: relative; width: min(1284.5px, 100%); background: var(--white); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 49.5px), calc(100% - 69.2px) 100%, 0 100%);
+  padding: 103px max(var(--gutter-r), 166px) 86px max(var(--gutter-l), 84px); }
+/* circuit-trace lines on the orange, right of the panel (Figma "electric", flipped) */
+.footer__lines { position: absolute; right: 0; top: 18px; width: 328px; height: 800px; max-width: none; pointer-events: none; opacity: .9; }
+.foot { max-width: 1034px; display: flex; flex-direction: column; gap: 43px; font-size: 15.02px; line-height: 21.46px; color: var(--black); }
+.foot__top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.foot__brand { width: 219px; display: flex; flex-direction: column; gap: 17px; }
+.foot__brand img { width: 216px; }
+.foot__cols { display: flex; justify-content: space-between; gap: 32px; width: min(691px, 100%); flex-wrap: wrap; }
+.foot__col h4 { margin: 0 0 27px; font-weight: 500; font-size: inherit; }
+.foot__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 21.46px; }
+.foot__col a:hover { color: var(--orange); }
+.foot__rule { height: 0; border-top: 1px solid var(--black); opacity: .2; }
+.foot__legal { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; font-weight: 300; font-size: 12.88px; line-height: 19.32px; }
+.foot__legal p { max-width: 586px; }
+.foot__iso { display: flex; flex-direction: column; align-items: flex-end; gap: 13px; text-align: right; }
+.foot__iso img { width: 74px; }
+.foot__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-weight: 300; font-size: 12.88px; }
+.foot__bottom .links { display: flex; gap: 18px; flex-wrap: wrap; }
+.socials { display: flex; gap: 8.6px; flex-wrap: wrap; }
+.socials a { background: var(--black); color: var(--white); border-radius: 999px; padding: 2px 8.6px; font: 600 12.88px/19.32px "Inter", var(--font-sans); }
+
+
+/* ---------- Splash: WeWire mark light sweep (same 1.7s animation as HR Tools), then the hero plays in ---------- */
+.splash { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; background: #000; cursor: pointer;
+  transition: opacity .45s ease, visibility 0s .45s; }
+html.is-loading .splash { display: flex; }
+.splash.out { opacity: 0; visibility: hidden; }
+.splash__vid { width: min(100vw, 100vh); height: min(100vw, 100vh); object-fit: contain; pointer-events: none; }
+html.is-loading body { overflow: hidden; }
+html.is-loading :is(.load-down, .load-up, .load-rise) { animation-play-state: paused; }
+
+/* ---------- Section animations ---------- */
+:root { --ease-out: cubic-bezier(.2, .8, .2, 1); }
+/* page load: hero */
+@keyframes ld-down { from { opacity: 0; transform: translateY(-16px); } }
+@keyframes ld-up { from { opacity: 0; transform: translateY(18px); } }
+@keyframes ld-rise { from { opacity: 0; transform: translateY(80px) scale(.96); } }
+@keyframes coin-float { 50% { transform: translateY(-10px); } }
+.load-down { animation: ld-down 700ms var(--ease-out) 100ms both; }
+.load-up { animation: ld-up 700ms var(--ease-out) 750ms both; }
+.load-rise { animation: ld-rise 1300ms var(--ease-out) 250ms both, coin-float 7s ease-in-out 1600ms infinite; }
+
+/* scroll reveals: only armed for elements below the fold when the page loads */
+.anim-armed[data-anim] { transition: opacity 700ms ease, transform 900ms var(--ease-out), clip-path 1100ms var(--ease-out);
+  transition-delay: calc(var(--d, 0ms) + var(--i, 0) * 90ms); }
+.anim-armed[data-anim="up"]:not(.in) { opacity: 0; transform: translateY(32px); }
+.anim-armed[data-anim="fade"]:not(.in) { opacity: 0; }
+.anim-armed[data-anim="rise"]:not(.in) { opacity: 0; transform: translateY(60px); }
+.anim-armed[data-anim="from-left"]:not(.in) { opacity: 0; transform: translateX(-70px); }
+.anim-armed[data-anim="from-right"]:not(.in) { opacity: 0; transform: translateX(70px); }
+.anim-armed[data-anim="wipe"]:not(.in) { clip-path: inset(100% 0 0 0); }
+.anim-armed[data-anim="wipe"] { clip-path: inset(0 0 0 0); }
+
+/* markets: wipe up on entry; on hover a card opens up (others close in), shows its licence, then closes */
+.markets .market { transition: flex-grow 900ms cubic-bezier(.6, 0, .2, 1), clip-path 1100ms var(--ease-out); transition-delay: 0ms, calc(var(--i, 0) * 90ms); }
+.market img { transform: scale(1.001); transition: transform 1200ms var(--ease-out); }
+.anim-armed.market:not(.in) img { transform: scale(1.18); }
+.market > span { transition: opacity 400ms ease, transform 800ms var(--ease-out); }
+.anim-armed.market:not(.in) > span { opacity: 0; transform: rotate(180deg) translateY(-24px); }
+.market__info { transition: opacity 350ms ease, transform 500ms var(--ease-out); }
+.market:is(:hover, :focus-visible) { flex-grow: 2.4; }
+.market:is(:hover, :focus-visible)::after { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.9) 100%); }
+.market:is(:hover, :focus-visible) > span { opacity: 0; transition-delay: 0ms; }
+.market:is(:hover, :focus-visible) .market__info { opacity: 1; transform: none; transition-delay: 380ms; }
+.market:is(:hover, :focus-visible) img { transform: scale(1.04); }
+.market:focus-visible { box-shadow: inset 0 0 0 3px var(--neon); }
+
+/* virtual accounts: currencies drift by */
+
+
+/* product rows: card slides in from its side, glass panels follow, image drifts with scroll */
+.card > img.bg { transform: translateY(var(--par, 0px)) scale(1.12); will-change: transform; }
+/* card illustrations loop: panels build in one by one, hold, clear, repeat */
+@keyframes glass-loop {
+  0% { opacity: 0; transform: translateY(22px) scale(.98); }
+  10%, 76% { opacity: 1; transform: none; }
+  88%, 100% { opacity: 0; transform: translateY(-10px); }
+}
+.card .glass { opacity: 0; }
+.card:is(.in, :not(.anim-armed)) .glass { animation: glass-loop 7s cubic-bezier(.2, .8, .2, 1) infinite both; }
+.card .glass:nth-of-type(1) { animation-delay: 300ms; }
+.card .glass:nth-of-type(2) { animation-delay: 650ms; }
+.card .glass:nth-of-type(3) { animation-delay: 1000ms; }
+/* build card: rails draw in, the WeWire mark pops in, both clear, repeat */
+.rails { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.rails path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+@keyframes rail-loop { 0% { stroke-dashoffset: 1; } 22%, 74% { stroke-dashoffset: 0; } 92%, 100% { stroke-dashoffset: -1; } }
+.card:is(.in, :not(.anim-armed)) .rails path { animation: rail-loop 7s cubic-bezier(.65, 0, .35, 1) infinite both; }
+.rails path:nth-child(even) { animation-delay: 150ms; }
+.mark { position: absolute; left: calc(257 / 636 * 100%); top: calc(208 / 539 * 100%); width: calc(123 / 636 * 100%); aspect-ratio: 1; border-radius: 4px;
+  background: rgba(255,255,255,.04); backdrop-filter: blur(4.8px); -webkit-backdrop-filter: blur(4.8px); box-shadow: inset 0 0 4px rgba(255,255,255,.25); opacity: 0; }
+.mark::before { content: ""; position: absolute; inset: 8.1%; border-radius: 4px; background: rgba(255,255,255,.2); box-shadow: inset 0 0 4px rgba(255,255,255,.25); }
+.mark img { position: absolute; left: 24.6%; top: 31.1%; width: 50.8%; height: auto; }
+@keyframes mark-loop { 0%, 12% { opacity: 0; transform: scale(.82); } 26%, 74% { opacity: 1; transform: none; } 88%, 100% { opacity: 0; transform: scale(.92); } }
+.card:is(.in, :not(.anim-armed)) .mark { animation: mark-loop 7s cubic-bezier(.2, .8, .2, 1) infinite both; }
+@media (prefers-reduced-motion: reduce) { .card .glass, .card .mark { animation: none !important; opacity: 1; } .rails path { animation: none !important; stroke-dashoffset: 0; } }
+.feature { transition: opacity 700ms ease, transform 500ms var(--ease-out); }
+.feature img { transition: transform 400ms var(--ease-out); }
+@media (hover: hover) {
+  .feature.in:hover, .feature:not(.anim-armed):hover { transform: translateY(-6px); transition-delay: 0ms; }
+  .feature:hover img { transform: translateX(4px); }
+}
+
+/* engine: globe rises and opens up with scroll */
+.engine__globe { transform: translateY(var(--gy, 0px)) scale(var(--gs, 1)); transform-origin: 50% 100%; will-change: transform; }
+
+/* featured: gentle zoom on the hovered story */
+.press img { transform: scale(1.1); transform-origin: 50% 50%; transition: transform 700ms var(--ease-out); }   /* headroom for the scroll parallax */
+@media (hover: hover) { .press:hover img { transform: scale(1.18); } }
+
+/* CTA scene drifts with scroll */
+.cta__scene, .footer__scene { translate: 0 var(--cy, 0px); will-change: translate; }
+
+/* buttons + footer links */
+.btn { transition: filter .2s ease, transform .25s var(--ease-out); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.foot__col a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 350ms var(--ease-out), color 200ms; }
+.foot__col a:hover { background-size: 100% 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .load-down, .load-up, .load-rise { animation: none !important; }
+  .card > img.bg, .engine__globe { transform: none !important; }
+  .cta__scene, .footer__scene { translate: none !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1180px) {
+  .product { position: relative; top: auto; height: auto; min-height: 0; padding-block: 72px; }
+  .product .inner, .product--flip .inner { flex-direction: column; gap: 48px; }
+  .product__text { flex-basis: auto; align-items: center; text-align: center; }
+  .card { width: min(636px, 100%); flex: none; }
+  .cta__copy { margin-right: 0; }
+  .footer__panel { padding-right: max(var(--gutter-r), 64px); }
+}
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+  .partners__row { flex-direction: column; gap: 40px; text-align: center; }
+  .partners__logos { flex-wrap: wrap; justify-content: center; gap: 36px 48px; }
+  .markets { overflow-x: auto; scroll-snap-type: x mandatory; }
+  .markets .market { flex: 0 0 min(320px, 80vw) !important; height: 520px; scroll-snap-align: start; }
+  .market > span { display: none; }
+  .market__info { opacity: 1; transform: none; }
+  .market::after { background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.85) 100%); }
+  .market__sub { font-size: 18px; white-space: normal; padding-inline: 16px; }
+  .drawer { height: auto; }
+  .drawer__stage { position: relative; height: auto; overflow: visible; display: grid; background: none; box-shadow: none; }
+  .drawer__shift, .drawer__shade, .drawer__copy { position: relative; inset: auto; grid-area: 1 / 1; transform: none; }
+  .drawer__stage { --rev: 0 !important; --zoom: 1 !important; }
+  .drawer__photo { position: relative; width: 100%; height: 600px; top: auto; object-fit: cover; object-position: 50% 50%; transform: none; }
+  .drawer__shade { align-self: end; }
+  .drawer__copy { align-self: end; bottom: auto; padding-bottom: 40px; }
+  .stats { position: relative; grid-area: 2 / 1; height: 761px; transform: none; }
+  .stats__neon, .stats__black { transform: none; }
+  .cta .inner { padding-top: 360px; }
+  .cta, .footer { --scene-w: 1100px; --scene-x: 290px; --scene-drop: 125px; }
+  .footer__lines { display: none; }
+}
+@media (max-width: 620px) {
+  .features { grid-template-columns: minmax(0, 1fr); width: 100%; }
+  .feature { background-size: 100% 100%; }
+  .partners { padding-block: 64px; }
+  .partners__logos { gap: 28px 36px; }
+  .plogo { zoom: .85; }
+  .accounts { padding-block: 72px; gap: 40px; }
+  .flags { height: 110px; }
+  .product { padding-block: 56px; }
+
+  .featured { padding-block: 96px 72px; }
+  .marquee { margin-top: 56px; }
+  .hero__copy { gap: 32px; padding-top: 32px; }
+  .nav { height: 88px; }
+  .footer__panel { padding: 64px var(--gutter-r) 40px var(--gutter-l); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+</style>
+
+<div class="splash" id="splash" aria-hidden="true"><video class="splash__vid" id="splashVid" src="assets/splash.mp4" muted playsinline autoplay preload="auto"></video></div>
+<script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-loading');</script>
+<div class="fold" id="fold">
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav load-down" aria-label="Main">
+      <a class="nav__logo" href="#" aria-label="WeWire home"><img src="assets/logo-white.svg" alt="WeWire" width="134" height="24"></a>
+      <ul class="nav__links">
+        <li><a href="#">Individual</a></li>
+        <li><a href="#">Business<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 5.5V12a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h5.29L3.65 4.35a.5.5 0 0 1 .7-.7l7.15 7.14V5.5a.5.5 0 0 1 1 0Z" fill="currentColor"/></svg></a></li>
+        <li><a href="#">Company<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 5.5V12a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h5.29L3.65 4.35a.5.5 0 0 1 .7-.7l7.15 7.14V5.5a.5.5 0 0 1 1 0Z" fill="currentColor"/></svg></a></li>
+        <li><a href="#">Tools<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 5.5V12a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h5.29L3.65 4.35a.5.5 0 0 1 .7-.7l7.15 7.14V5.5a.5.5 0 0 1 1 0Z" fill="currentColor"/></svg></a></li>
+      </ul>
+      <a class="btn btn--neon btn--sm" href="#">Get started</a>
+    </nav>
+    <div class="hero__copy">
+      <h1 class="display hero__title" data-words>Powering Payments.<br>Enabling Growth</h1>
+      <a class="btn btn--neon load-up" href="#">Create an Account</a>
+    </div>
+  </div>
+  <img class="hero__coins load-rise" src="assets/hero-scene.webp" alt="" width="1512" height="1092">
+</header>
+
+  <section class="drawer" id="drawer" aria-label="Global payment infrastructure">
+    <div class="drawer__stage">
+      <div class="drawer__shift"><img class="drawer__photo" src="assets/drawer-photo-2x.webp" alt="A smiling business owner at her desk" width="1773" height="920"></div>
+      <div class="drawer__swap" aria-hidden="true"><img alt=""><img alt=""></div>
+      <div class="drawer__shade"></div>
+      <div class="drawer__copy">
+        <div class="wrap inner">
+          <h2 class="drawer__lede" data-words>Global cross-border payment infrastructure for fintechs, financial institutions, and enterprise platforms.</h2>
+          <div class="ctas" data-anim="up" style="--d:500ms">
+            <a class="btn btn--orange" href="#">Move Money Directly</a>
+            <a class="btn btn--white" href="#">Build on our Rails</a>
+          </div>
+        </div>
+      </div>
+      <aside class="stats" id="stats" aria-label="WeWire in numbers">
+        <div class="stats__top"><span class="stats__fig"><b>$</b><span class="cnt" data-to="13.5" data-dec="1">13.5</span> bn</span><span class="stats__cap">in transaction volume</span></div>
+        <div class="stats__neon"><div class="stats__txt"><span class="stats__fig"><span class="cnt" data-to="100">100</span>+ countries</span><span class="stats__cap">covered in transactions</span></div></div>
+        <div class="stats__black"><div class="stats__txt"><span class="stats__fig"><span class="cnt" data-to="3000">3,000</span>+</span><span class="stats__cap">businesses served</span></div></div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<main>
+  <section class="partners wrap" aria-label="Businesses building on WeWire">
+    <div class="partners__row">
+      <p class="partners__lede" data-anim="up">Trusted by leading companies and teams around the world</p>
+      <div class="partners__logos">
+        <span class="plogo" style="width:97px"><img src="assets/logos/wil.webp" alt="WIL" width="388" height="183" loading="lazy"></span>
+        <span class="plogo" style="width:82px"><img src="assets/logos/translight.webp" alt="Translight Solar" width="329" height="267" loading="lazy"></span>
+        <span class="plogo" style="width:113px"><img src="assets/logos/paga.webp" alt="Paga" width="451" height="127" loading="lazy"></span>
+        <span class="plogo" style="width:105px"><img src="assets/logos/payaza.webp" alt="Payaza" width="421" height="100" loading="lazy"></span>
+        <span class="plogo" style="width:126px"><img src="assets/logos/cadana.webp" alt="Cadana" width="503" height="101" loading="lazy"></span>
+        <span class="plogo" style="width:120px"><img src="assets/logos/acceltor.webp" alt="Acceltor Solutions" width="479" height="108" loading="lazy"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="licences" aria-labelledby="t-licences">
+    <h2 class="display section-title wrap" id="t-licences" data-words>Licensed Across<br>Multiple Markets</h2>
+    <div class="markets" data-stagger>
+      <figure class="market" data-anim="wipe" tabindex="0" style="margin:0; --chip:#fd4d01"><img src="assets/city-canada.webp" alt="Parliament Hill, Ottawa" loading="lazy"><span>Canada</span><figcaption class="market__info"><b class="market__chip" style="font-weight:300">Canada</b><span class="market__sub">Registered PSP &amp; MSB</span></figcaption></figure>
+      <figure class="market" data-anim="wipe" tabindex="0" style="margin:0; --chip:#0091f0"><img src="assets/city-ghana.webp" alt="Kwame Nkrumah Memorial Park, Accra" loading="lazy"><span>Ghana</span><figcaption class="market__info"><b class="market__chip" style="font-weight:300">Ghana</b><span class="market__sub">IMTO, VASP Registration</span></figcaption></figure>
+      <figure class="market" data-anim="wipe" tabindex="0" style="margin:0; --chip:#edfe34; --chip-ink:#075614"><img src="assets/city-mauritius.webp" alt="Le Morne Brabant, Mauritius" loading="lazy"><span>Mauritius</span><figcaption class="market__info"><b class="market__chip" style="font-weight:300">Mauritius</b><span class="market__sub">Global Business and Treasury Entity</span></figcaption></figure>
+      <figure class="market" data-anim="wipe" tabindex="0" style="margin:0; --chip:#075614"><img src="assets/city-uae.webp" alt="Burj Al Arab, Dubai" loading="lazy"><span>UAE</span><figcaption class="market__info"><b class="market__chip" style="font-weight:300">Dubai</b><span class="market__sub">DIFC Fintech Software House</span></figcaption></figure>
+      <figure class="market" data-anim="wipe" tabindex="0" style="margin:0; --chip:#fcb11a; --chip-ink:#101828"><img src="assets/city-cameroon.webp" alt="Reunification Monument, Yaoundé" loading="lazy" style="object-position: 100% 50%"><span>Cameroon</span><figcaption class="market__info"><b class="market__chip" style="font-weight:300">Cameroon</b><span class="market__sub">Fintech License</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="accounts" aria-labelledby="t-accounts">
+    <h2 class="display title-64" id="t-accounts" data-words>Open &amp; Operate Virtual Accounts in your business name</h2>
+    <div class="flags" data-anim="fade" aria-label="Accounts in GBP, EUR, NGN and USD"><div class="flags__track" id="flags-track"><span class="flag" aria-hidden="true" title="GBP"><svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></span><span class="flag" aria-hidden="true" title="EUR"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></span><span class="flag" aria-hidden="true" title="NGN"><svg viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></span><span class="flag" aria-hidden="true" title="USD"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></span><span class="flag" aria-hidden="true" title="GBP"><svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></span><span class="flag" aria-hidden="true" title="EUR"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></span><span class="flag" aria-hidden="true" title="NGN"><svg viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></span><span class="flag" aria-hidden="true" title="USD"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></span></div></div>
+  </section>
+
+  <div class="stack">
+  <section class="product product--move" aria-labelledby="t-move">
+    <div class="wrap inner">
+      <div class="card u" aria-hidden="true" data-anim="from-left">
+        <img class="bg" src="assets/card-accounts.webp" alt="" loading="lazy">
+        <div class="glass balance">
+          <p class="balance__label">Total Balance</p>
+          <p class="balance__amt"><b>$</b><span data-count="800000.89" data-dec="2">800,000.89</span></p>
+        </div>
+        <div class="glass txn" style="top: calc(235 * var(--s))">
+          <img class="av" src="assets/avatar-dark.svg" alt="">
+          <div class="who" style="gap: calc(26 * var(--s))"><b>Echad Inc</b><i>Jul 22, 2025- 9:15</i></div>
+          <span class="amt" style="top: calc(27 * var(--s))">$100,000</span>
+          <span class="amt" style="top: calc(66 * var(--s))">Sent</span>
+        </div>
+        <div class="glass txn" style="top: calc(355 * var(--s))">
+          <img class="av" src="assets/avatar-dark.svg" alt="">
+          <div class="who" style="gap: calc(26 * var(--s))"><b>Echad Inc</b><i>Jul 22, 2025- 9:15</i></div>
+          <span class="amt" style="top: calc(27 * var(--s))">$100,000</span>
+          <span class="amt" style="top: calc(66 * var(--s))">Sent</span>
+        </div>
+      </div>
+      <div class="product__text">
+        <h2 class="display title-64" id="t-move" data-words>Move money across borders</h2>
+        <div class="features" data-stagger style="--d:350ms">
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Global Payouts</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>FX &amp; Local Payments</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Cross-Border Collections</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Stablecoin Settlement</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product product--build product--flip" aria-labelledby="t-build">
+    <div class="wrap inner">
+      <div class="card" aria-hidden="true" data-anim="from-right"><img class="bg" src="assets/card-build-bg.webp" alt="" loading="lazy">
+        <svg class="rails" viewBox="0 0 636 539" preserveAspectRatio="none" aria-hidden="true" fill="none" stroke="white">
+          <path pathLength="1" d="M319 229.5V157.5H102L80 135.5V-12" stroke-width=".6"/><path pathLength="1" d="M319 229.5V157.5H536L558 135.5V-12" stroke-width=".6"/>
+          <path pathLength="1" d="M319 169.5V97.5H460L482 75.5V-72" stroke-width=".6"/><path pathLength="1" d="M319 169.5V97.5H178L156 75.5V-72" stroke-width=".6"/>
+          <path pathLength="1" d="M319 302V374H536L558 396V543.5" stroke-width=".6"/><path pathLength="1" d="M319 302V374H102L80 396V543.5" stroke-width=".6"/>
+          <path pathLength="1" d="M319 362V434H178L156 456V603.5" stroke-width=".6"/><path pathLength="1" d="M319 362V434H460L482 456V603.5" stroke-width=".6"/>
+          <path pathLength="1" d="M482 75.5L460 97.5"/><path pathLength="1" d="M156 456L178 434"/>
+        </svg>
+        <div class="mark"><img src="assets/glass-icon.svg" alt=""></div>
+      </div>
+      <div class="product__text">
+        <h2 class="display title-64" id="t-build" data-words>Build fintech and payment solutions</h2>
+        <div class="features" data-stagger style="--d:350ms">
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Payment API</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Programmatic Payouts</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Developer Tools</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Sandbox</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product product--manage" aria-labelledby="t-manage">
+    <div class="wrap inner">
+      <div class="card u" aria-hidden="true" data-anim="from-left">
+        <img class="bg" src="assets/card-manage.webp" alt="" loading="lazy">
+        <div class="glass txn" style="top: calc(74 * var(--s)); --a: .06">
+          <img class="av" src="assets/avatar-light.svg" alt="">
+          <div class="who" style="gap: calc(8 * var(--s)); top: calc(34 * var(--s))"><b>Echad Inc</b><i>echad@gmail.com</i></div>
+          <span class="amt" style="top: calc(34 * var(--s))">$11,000,000</span>
+        </div>
+        <div class="glass invoice">
+          <h3>Invoice 221</h3>
+          <dl>
+            <div><dt>Amount</dt><dd>$5,000,000</dd></div>
+            <div><dt>Created</dt><dd>Aug 7, 2026</dd></div>
+            <div><dt>Due</dt><dd>Aug 11, 2026</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="product__text">
+        <h2 class="display title-64" id="t-manage" data-words>Manage and administer funds for customers</h2>
+        <div class="features" data-stagger style="--d:350ms">
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Smart Invoicing</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>OTC Desk</p></div>
+          <div class="feature" data-anim="up"><img src="assets/icon-card.svg" alt=""><svg class="feature__arrow" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M8 20 20 8M10 8h10v10" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg><p>Trade Tokenizations</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <section class="engine" aria-labelledby="t-engine">
+    <div class="wrap" style="display:flex;flex-direction:column;align-items:center">
+      <h2 class="display title-80" id="t-engine" data-words>One engine for global money movement</h2>
+      <p class="engine__sub" data-anim="up" style="--d:350ms">Connect fiat networks and stablecoin rails through a single, compliant infrastructure layer.</p>
+    </div>
+    <div class="engine__globe" data-scroll="globe" id="globe" role="img" aria-label="A sphere of WeWire customer and market images. Drag to spin it."><canvas aria-hidden="true"></canvas><span class="engine__hint" aria-hidden="true">Drag to spin</span></div>
+  </section>
+
+  <section class="featured" aria-labelledby="t-featured">
+    <h2 class="display title-80 wrap" id="t-featured" data-words>Featured on</h2>
+    <div class="marquee" data-anim="up">
+      <div class="marquee__track" id="press-track">
+        <article class="press"><div class="press__media"><img draggable="false" src="assets/feat-payments.webp" alt="" loading="lazy"></div><div><h3>Payments.com</h3><p>Growing a business isn’t easy, but we’ve got your back. WeWire helps businesses of all sizes and types, from retail, e-commerce.</p></div></article>
+        <article class="press"><div class="press__media"><img draggable="false" src="assets/feat-bft.webp" alt="" loading="lazy"></div><div><h3>Business and Financial Times</h3><p>Growing a business isn’t easy, but we’ve got your back. WeWire helps businesses of all sizes and types, from retail, e-commerce.</p></div></article>
+        <article class="press"><div class="press__media"><img draggable="false" src="assets/feat-tether.webp" alt="" loading="lazy"></div><div><h3>Tether's Global USDT Directory</h3><p>Growing a business isn’t easy, but we’ve got your back. WeWire helps businesses of all sizes and types, from retail, e-commerce.</p></div></article>
+        <article class="press"><div class="press__media"><img draggable="false" src="assets/feat-sec.webp" alt="" loading="lazy"></div><div><h3>SEC Sandbox</h3><p>Growing a business isn’t easy, but we’ve got your back.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="t-cta">
+    <img class="cta__scene" data-scroll="cta" src="assets/cta-coins.webp" alt="" width="1847" height="946" loading="lazy">
+    <div class="wrap inner">
+      <div class="cta__copy">
+        <h2 class="display cta__title" id="t-cta" data-words>Money makes the World Go Round, We Make Money Move</h2>
+        <a class="btn btn--neon" data-anim="up" style="--d:600ms" href="#">Create an account</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <img class="footer__scene" src="assets/cta-coins.webp" alt="" width="1847" height="946" loading="lazy">
+  <img class="footer__lines" src="assets/footer-lines.webp" alt="" width="328" height="800" loading="lazy">
+  <div class="footer__panel">
+    <div class="foot">
+      <div class="foot__top">
+        <div class="foot__brand" data-anim="up">
+          <img src="assets/logo.svg" alt="WeWire" width="216" height="39">
+          <p>WeWire empowers businesses with 24/7 global and secure cross-border and trade services seamlessly</p>
+        </div>
+        <div class="foot__cols" data-stagger>
+          <div class="foot__col" data-anim="up"><h4>Products</h4><ul><li><a href="#">Multi-currency Wallets</a></li><li><a href="#">Web Platform</a></li><li><a href="#">24/7 OTC Desk</a></li><li><a href="#">Virtual Expense Cards</a></li><li><a href="#">Treasury</a></li></ul></div>
+          <div class="foot__col" data-anim="up"><h4>Use Cases</h4><ul><li><a href="#">Betting</a></li><li><a href="#">Import/Export</a></li><li><a href="#">Money Transfer</a></li><li><a href="#">Pharmaceuticals</a></li><li><a href="#">Financial Services</a></li></ul></div>
+          <div class="foot__col" data-anim="up"><h4>Tools</h4><ul><li><a href="#">Swift/BIC Checker</a></li><li><a href="#">IBAN Checker</a></li><li><a href="#">Register Your Business</a></li><li><a href="#">Pricing</a></li></ul></div>
+          <div class="foot__col" data-anim="up"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Blog</a></li><li><a href="#">Contact</a></li><li><a href="#">FAQs</a></li></ul></div>
+        </div>
+      </div>
+      <div class="foot__rule"></div>
+      <div class="foot__legal" data-anim="fade">
+        <p>Slightly updated - WeWire is a B2B payment company that operates within multiple markets with multiple entities which are duly registered under relevant bodies and authorised to provide specific financial services in accordance with local regulations. Licensing status may vary by markets. WeWire is legally covered and fully licensed to provide services such as stablecoin payments, virtual accounts, trade financing, or digital wallets in markets where regulation permits. Nothing on this platform constitutes an offer or solicitation to engage in regulated activity in any jurisdiction where such activity is not permitted.</p>
+        <div class="foot__iso"><img src="assets/iso.webp" alt="ISO 27001 certified" width="74" height="69"><span>WeWire is ISO certified.<br>ISO/IEC 27001:2022<br>(Information Security Management System).</span></div>
+      </div>
+      <div class="foot__bottom">
+        <div class="links"><span>© 2024 WeWire</span><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+        <div class="socials"><a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a><a href="https://x.com" target="_blank" rel="noopener">X-Twitter</a><a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* Splash: plays the WeWire mark once, then hands over to the hero entrance. Click to skip; never blocks for long. */
+(function () {
+  const root = document.documentElement, sp = document.getElementById('splash'), v = document.getElementById('splashVid');
+  let done = false;
+  const finish = () => {
+    if (done) return; done = true;
+    sp.classList.add('out'); root.classList.remove('is-loading');
+    dispatchEvent(new Event('splashdone'));
+    setTimeout(() => sp.remove(), 600);
+  };
+  if (!root.classList.contains('is-loading')) { sp.remove(); return; }
+  v.addEventListener('ended', finish); v.addEventListener('error', finish); sp.addEventListener('click', finish);
+  const p = v.play(); if (p && p.catch) p.catch(finish);
+  setTimeout(finish, 4000);
+})();
+
+/* Fold + drawer sequence
+   1) drawer slides over the pinned hero; the photo settles from a slight zoom as it arrives
+   2) once pinned, the reader has to keep scrolling (holdPx) before the reveal fires
+   3) the reveal plays as a timed animation: photo + copy slide left, blue panel enters,
+      neon then black blocks stagger in. Scrolling back above the trigger plays it in reverse. */
+const DRAWER = {
+  travel: 320,      // px the section stays pinned (stats stop at 260, then it releases after one more scroll)
+  holdPx: 260,      // scroll distance between the two stops (photo stop -> stats stop)
+  stopMs: 250,      // how long the page rests at the photo stop
+  revealStopMs: 450, // rest at the stats stop while the reveal plays
+  snapRange: 220,   // when you scroll within this many px of a stop, the page glides onto it
+  glideMs: 500,     // length of that glide
+  arriveAt: 0.4,    // the photo scale-in plays once the section's top passes 40% of the screen
+  zoomStart: 1.15,  // photo scale before it arrives
+  zoomReveal: 0.94  // photo scale while the stats are showing
+};
+(function () {
+  const fold = document.getElementById('fold'), hero = fold.querySelector('.hero');
+  const drawer = document.getElementById('drawer'), stage = drawer.querySelector('.drawer__stage'), stats = document.getElementById('stats');
+  const wide = matchMedia('(min-width: 901px)'), still = matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = v => Math.min(1, Math.max(0, v));
+  let raf = 0;
+  const layout = () => {
+    drawer.style.setProperty('--travel', DRAWER.travel + 'px');
+    hero.style.setProperty('--hero-stick', Math.min(0, innerHeight - hero.offsetHeight) + 'px');
+    const w = stage.clientWidth;
+    if (wide.matches) {
+      // the pinned stage fills the screen; the 1512 x 760 Figma frame is scaled to cover it,
+      // and the stats panel is scaled to fit inside it so every block stays fully visible
+      const h = innerHeight;
+      const kc = Math.max(w / 1512, h / 760), k = Math.min(w / 1512, h / 760);
+      drawer.style.setProperty('--stage-h', h + 'px');
+      stage.style.setProperty('--kc', kc.toFixed(4));
+      stage.style.setProperty('--ph-top', ((h - 760 * kc) / 2 - 80 * kc).toFixed(1) + 'px');
+      stats.style.setProperty('--k', k.toFixed(4)); stage.style.setProperty('--k', k.toFixed(4));
+    } else {
+      drawer.style.removeProperty('--stage-h');
+      stats.style.setProperty('--k', (w / 560).toFixed(4));
+    }
+    update();
+  };
+  const update = () => {
+    raf = 0;
+    if (!wide.matches) { stage.classList.remove('is-revealed', 'is-arrived'); return; }
+    stage.style.setProperty('--zoom-start', still.matches ? 1 : DRAWER.zoomStart);
+    stage.style.setProperty('--zoom-reveal', still.matches ? 1 : DRAWER.zoomReveal);
+    const r = drawer.getBoundingClientRect();
+    // arrival: timed scale-in, replays if you scroll back up into the hero
+    if (r.top <= innerHeight * DRAWER.arriveAt) stage.classList.add('is-arrived');
+    else if (r.top > innerHeight * (DRAWER.arriveAt + 0.25)) stage.classList.remove('is-arrived');
+    const y = scrollY, stop1 = docTop() , stop2 = stop1 + DRAWER.holdPx;
+    const down = y > lastY;
+    // stop 1: the photo section, before any stats. A fresh scroll is needed to move on.
+    if (down && !locked() && lastY < stop1 && y >= stop1 - DRAWER.snapRange && !used1) { used1 = true; park(stop1, DRAWER.stopMs); }
+    // stop 2: the stats. Reveal plays here; the page rests while it does.
+    else if (down && !locked() && y < stop2 + 40 && y >= stop2 - DRAWER.snapRange && y > stop1 + 20 && !used2) { used2 = true; park(stop2, DRAWER.revealStopMs); }
+    if (y < stop1 - innerHeight * 0.3) used1 = false;
+    if (y < stop2 - 120) used2 = false;
+    const on = stage.classList.contains('is-revealed');
+    if (!on && y >= stop2 - 1) stage.classList.add('is-revealed');
+    else if (on && y < stop2 - 80) stage.classList.remove('is-revealed');
+    lastY = scrollY;
+  };
+  /* ---- scroll stops: hold the page in place and swallow the gesture (including trackpad momentum) ---- */
+  const docTop = () => drawer.getBoundingClientRect().top + scrollY;
+  let lastY = scrollY, used1 = false, used2 = false, lock = null;
+  const now = () => performance.now();
+  const locked = () => {
+    if (!lock) return false;
+    if (now() >= lock.minEnd) { lock = null; return false; }   // fixed rest, never extended by more scrolling
+    return true;
+  };
+  // glide onto the stop with an ease-out curve instead of jumping, then rest briefly
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const lockY = () => {
+    if (!lock) return scrollY;
+    const k = Math.min(1, (now() - lock.t0) / DRAWER.glideMs);
+    return lock.from + (lock.pos - lock.from) * easeOut(k);
+  };
+  function park(pos, ms) {
+    lock = { pos, from: scrollY, t0: now(), minEnd: now() + DRAWER.glideMs + ms, lastInput: now() };
+    const step = () => { if (!lock || lock.pos !== pos) return; const y = lockY(); scrollTo({ top: y, behavior: 'instant' }); lastY = y; if (now() - lock.t0 < DRAWER.glideMs) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  const hold = e => {
+    if (!locked()) return;
+    if (e.type === 'wheel' && e.deltaY < 0) { lock = null; return; }   // scrolling back up is always allowed
+    lock.lastInput = now();
+    e.preventDefault();
+  };
+  addEventListener('wheel', hold, { passive: false });
+  addEventListener('touchmove', hold, { passive: false });
+  addEventListener('keydown', e => {
+    if (locked() && [' ', 'PageDown', 'ArrowDown', 'End'].includes(e.key)) { lock.lastInput = now(); e.preventDefault(); }
+  });
+  addEventListener('scroll', () => { if (lock && locked()) { const y = lockY(); if (Math.abs(scrollY - y) > 1) { scrollTo({ top: y, behavior: 'instant' }); lastY = y; } } }, { passive: true });
+  { const y0 = scrollY, t0 = docTop(); used1 = y0 >= t0; used2 = y0 >= t0 + DRAWER.holdPx; }
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  addEventListener('resize', layout);
+  wide.addEventListener('change', layout);
+  layout();
+})();
+
+/* Stats hover: each block shows its own image (one-to-one); scrolling never changes the photo */
+(function () {
+  const stage = document.querySelector('.drawer__stage'), stats = document.getElementById('stats');
+  if (!stage || !stats) return;
+  const canHover = matchMedia('(hover: hover)').matches;
+  const SRC = ['assets/stack-volume.webp', 'assets/stack-countries.webp', 'assets/stack-business.webp'];   // $13.5 Bn (blue), 100+ countries (neon), 3,000+ businesses (black)
+  SRC.forEach(src => { const i = new Image(); i.src = src; });   // preload so the swap is instant
+  const [a, b] = stage.querySelectorAll('.drawer__swap img');
+  let front = a, n = 0, cur = null;
+  const show = src => {
+    if (front.classList.contains('on') && front.getAttribute('src') === src) return;
+    const back = front === a ? b : a;
+    back.src = src; back.classList.add('on'); front.classList.remove('on'); front = back;
+  };
+  const cnts = [...stats.querySelectorAll('.cnt')];
+  const setNum = (c, v) => { const d = +c.dataset.dec || 0; c.textContent = v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  const countUp = c => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return setNum(c, +c.dataset.to);
+    const end = +c.dataset.to, t0 = performance.now(), dur = 1500;
+    const step = t => { const k = Math.min(1, (t - t0) / dur); setNum(c, end * (1 - Math.pow(1 - k, 4))); if (k < 1 && stage.classList.contains('is-revealed') || k < 1 && !wideQ.matches) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  const wideQ = matchMedia('(min-width: 901px)');
+  // phones: the stats sit under the photo, so count up whenever they scroll into view
+  new IntersectionObserver(es => es.forEach(e => {
+    if (wideQ.matches) return;
+    if (e.isIntersecting) cnts.forEach((c, i) => setTimeout(() => countUp(c), i * 250)); else cnts.forEach(c => setNum(c, 0));
+  }), { threshold: .3 }).observe(stats);
+  // scrolling the blocks in never changes the photo; only hovering a block does
+  let timers = [], was = false;
+  const clearAll = () => { timers.forEach(clearTimeout); timers = []; a.classList.remove('on'); b.classList.remove('on'); cur = null; };
+  new MutationObserver(() => {
+    const on = stage.classList.contains('is-revealed');
+    if (on === was) return; was = on;
+    clearAll();
+    if (on) {
+      // each number counts up as its block slides in: $13.5 Bn (blue), 100+ (neon), 3,000+ (black)
+      cnts.forEach((c, i) => { setNum(c, 0); timers.push(setTimeout(() => countUp(c), [250, 750, 1000][i])); });
+    } else cnts.forEach(c => setNum(c, 0));
+  }).observe(stage, { attributes: true, attributeFilter: ['class'] });
+  if (!canHover) return;
+  [...stats.children].forEach(block => block.addEventListener('pointerenter', () => {
+    if (!stage.classList.contains('is-revealed') || cur === block) return;
+    cur = block; show(SRC[[...stats.children].indexOf(block)]);
+  }));
+  stats.addEventListener('pointerleave', () => { cur = null; });   // keep the current photo; the next block hovered moves it on
+})();
+
+/* Section animations: scroll reveals, count-up, scroll-linked drift */
+(function () {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-stagger]').forEach(g => [...g.children].forEach((c, i) => c.style.setProperty('--i', i)));
+  const els = [...document.querySelectorAll('[data-anim]')];
+  const counters = [...document.querySelectorAll('[data-count]')];
+  const fmt = (v, d) => v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const count = el => {
+    const end = parseFloat(el.dataset.count), d = +el.dataset.dec || 0, t0 = performance.now(), dur = 1600;
+    const step = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4); el.textContent = fmt(end * e, d); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  if (!reduce && 'IntersectionObserver' in window) {
+    const vh = innerHeight;
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const wipe = !!e.target._wipeKids;
+      if (wipe) io.unobserve(e.target);   // the markets wipe plays once only
+      // clipped (wipe) items are watched through their parent, since a fully clipped element never intersects
+      const targets = e.target._wipeKids || [e.target];
+      targets.forEach(t => { if (t.classList.contains('in')) return; t.classList.add('in'); t.querySelectorAll('[data-count]').forEach(count); });
+    }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    // once an element is fully off screen, reset it so it plays again the next time it comes into view (either direction)
+    const ioOut = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) e.target.classList.remove('in'); }), { threshold: 0 });
+    // product panels: everything inside plays in sequence once the panel has covered ~40% of the screen
+    const ioLand = new IntersectionObserver(es => es.forEach(e => {
+      const kids = e.target.querySelectorAll('.anim-armed[data-anim]');
+      if (e.isIntersecting) kids.forEach(el => { if (el.classList.contains('in')) return; el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(count); });
+    }), { threshold: 0, rootMargin: '0px 0px -60% 0px' });
+    const ioLandOut = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) e.target.querySelectorAll('.anim-armed[data-anim]').forEach(el => el.classList.remove('in')); }), { threshold: 0 });
+    document.querySelectorAll('.product').forEach(sec => { ioLand.observe(sec); ioLandOut.observe(sec); });
+    const wipeParents = new Set();
+    els.forEach(el => {
+      if (el.closest('.drawer')) return;                 // the photo section has its own sequence
+      const below = el.getBoundingClientRect().top > vh * 0.92;
+      if (el.dataset.anim === 'wipe') {
+        if (!below) return;
+        el.classList.add('anim-armed'); const p = el.parentElement; (p._wipeKids = p._wipeKids || []).push(el); wipeParents.add(p);
+        return;
+      }
+      el.classList.add('anim-armed');
+      if (!below) el.classList.add('in');
+      if (!el.closest('.product')) { io.observe(el); ioOut.observe(el); }
+    });
+    wipeParents.forEach(p => io.observe(p));
+  }
+  document.querySelectorAll('.card .glass').forEach(g => {
+    const c = g.querySelector('[data-count]');
+    if (c) g.addEventListener('animationiteration', () => count(c));
+  });
+  if (reduce) return;
+  // scroll-linked drift: product photos, globe, CTA scene
+  const cards = [...document.querySelectorAll('.card > img.bg')];
+  const globe = document.querySelector('[data-scroll="globe"]'), cta = document.querySelector('[data-scroll="cta"]'); const fscene = document.querySelector('.footer__scene');
+  let raf = 0;
+  const prog = el => { const r = el.getBoundingClientRect(); return (innerHeight - r.top) / (innerHeight + r.height); }; // 0 entering .. 1 leaving
+  const tick = () => {
+    raf = 0;
+    cards.forEach(img => { const p = prog(img.parentElement); if (p > -0.1 && p < 1.1) img.style.setProperty('--par', ((0.5 - p) * 60).toFixed(1) + 'px'); });
+    if (globe) { const p = Math.min(1, Math.max(0, prog(globe) * 1.6)); globe.style.setProperty('--gy', ((1 - p) * 120).toFixed(1) + 'px'); globe.style.setProperty('--gs', (0.88 + 0.12 * p).toFixed(3)); }
+    if (cta) { const p = prog(cta.parentElement); if (p > -0.1 && p < 1.1) { const v = ((0.5 - p) * 90).toFixed(1) + 'px'; cta.style.setProperty('--cy', v); fscene && fscene.style.setProperty('--cy', v); } }
+    // hero parallax: while the photo section slides over, the copy lifts away fastest, the coin scene drifts slower,
+    // and the nav stays put, so the hero reads in layers
+    const y = Math.min(scrollY, innerHeight * 1.2);
+    if (heroScene) heroScene.style.translate = `0 ${(y * -0.18).toFixed(1)}px`;
+    if (heroCopy) { heroCopy.style.translate = `0 ${(y * -0.42).toFixed(1)}px`; heroCopy.style.opacity = Math.max(0, 1 - y / (innerHeight * .7)).toFixed(3); }
+    // gentle parallax inside the city and press photos
+    pars.forEach(([img, amt]) => { const p = prog(img.parentElement); if (p > -0.1 && p < 1.1) img.style.translate = `0 ${((0.5 - p) * amt).toFixed(1)}px`; });
+  };
+  const heroScene = document.querySelector('.hero__coins'), heroCopy = document.querySelector('.hero__copy');
+  const pars = [...document.querySelectorAll('.market img')].map(i => [i, 50]).concat([...document.querySelectorAll('.press__media img')].map(i => [i, 30]));
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
+  addEventListener('resize', tick);
+  tick();
+})();
+
+/* One engine globe: WebGL sphere of image tiles. Auto-rotates; drag to spin with momentum. */
+(function () {
+  const host = document.getElementById('globe'); if (!host) return;
+  const canvas = host.querySelector('canvas');
+  if (!window.THREE) { host.classList.add('no-gl'); return; }
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { host.classList.add('no-gl'); return; }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
+  camera.position.set(0, 0, 4.2);
+  const group = new THREE.Group(); scene.add(group);
+
+  // tiles on a fibonacci sphere; each tile samples one of 16 cells in the atlas
+  // atlas rects [u, v, w, h, aspect] for the 11 globe photos (Figma: Section 1)
+  const RECTS = [[0,.70833,.25,.25,1.333],[.25,.71745,.25,.23307,1.43],[.5,.72266,.25,.22266,1.497],[.75,.72266,.25,.22266,1.497],[0,.375,.25,.25,1.333],[.25,.38932,.25,.22266,1.497],[.5,.33333,.25,.33333,1],[.75,.38932,.25,.22135,1.5],[0,0,.25,.33333,1],[.27441,0,.2002,.33333,.801],[.52441,0,.2002,.33333,.801]];
+  const N = 120, R = 1;
+  const pos = [], uv = [], nrm = [], idx = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i + .5) / N * 2, r = Math.sqrt(1 - y * y), th = golden * i;
+    const n = new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r);
+    const up = Math.abs(n.y) > .98 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0);
+    const tx = new THREE.Vector3().crossVectors(up, n).normalize();
+    const ty = new THREE.Vector3().crossVectors(n, tx).normalize();
+    const [u0, v0, uw, vh, asp] = RECTS[(i * 7) % RECTS.length];   // step through all 11 so neighbours differ
+    const hw = 0.032 + rnd() * 0.018, hh = hw / asp;                  // small photo cards, true aspect ratio
+    const c = n.clone().multiplyScalar(R);
+    const base = pos.length / 3, e = .002;
+    [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([a, b]) => {
+      const p = c.clone().addScaledVector(tx, a * hw).addScaledVector(ty, b * hh);
+      pos.push(p.x, p.y, p.z); nrm.push(n.x, n.y, n.z);
+      uv.push(a > 0 ? u0 + uw - e : u0 + e, b > 0 ? v0 + vh - e : v0 + e);
+    });
+    idx.push(base, base + 1, base + 2, base, base + 2, base + 3);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  geo.setIndex(idx);
+  const tex = new THREE.TextureLoader().load('assets/globe-atlas.webp', () => { tex.needsUpdate = true; host.classList.add('is-ready'); });
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { map: { value: tex } },
+    vertexShader: 'varying vec2 vUv; varying float vFace; void main(){ vUv = uv; vFace = normalize(normalMatrix * normal).z; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: 'uniform sampler2D map; varying vec2 vUv; varying float vFace; void main(){ vec4 c = texture2D(map, vUv); float front = smoothstep(-0.35, 0.55, vFace); float a = mix(0.0, 1.0, front); vec3 col = mix(vec3(1.0), c.rgb, mix(0.5, 1.0, front)); gl_FragColor = vec4(col, a); }',
+    transparent: true, depthWrite: false, side: THREE.DoubleSide
+  });
+  group.add(new THREE.Mesh(geo, mat));
+  group.rotation.x = 0.35;
+
+  const size = () => {
+    const w = host.clientWidth, h = host.clientHeight; if (!w || !h) return;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    // a big dome like the Figma frame: diameter ~86% of the width, top of the sphere 6% below the top edge,
+    // the lower half runs off the bottom and fades out
+    const fov = 30 * Math.PI / 180, t = Math.tan(fov / 2);
+    const diaPx = Math.min(w * .86, h * 1.9);
+    const visH = 2 * R * h / diaPx;            // world units visible vertically at the sphere's centre plane
+    camera.position.z = visH / 2 / t;
+    group.position.y = visH / 2 - visH * .06 - R;
+    camera.updateProjectionMatrix();
+  };
+  size(); addEventListener('resize', size);
+
+
+  // interaction
+  let vy = 0, vx = 0, drag = null, hover = false, visible = true;
+  const AUTO = reduce ? 0 : 0.0016;
+  host.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hover = true; });
+  host.addEventListener('pointerleave', () => { hover = false; });
+  host.addEventListener('pointerdown', e => { if (e.button !== 0) return; drag = { id: e.pointerId, x: e.clientX, y: e.clientY, on: false }; });
+  addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.on) {
+      if (Math.hypot(dx, dy) < 4) return;
+      if (e.pointerType !== 'mouse' && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }  // vertical swipe scrolls the page
+      drag.on = true; host.classList.add('is-dragging'); host.setPointerCapture?.(e.pointerId);
+    }
+    const k = 3.2 / host.clientHeight;
+    vy = dx * k; vx = dy * k;
+    group.rotation.y += vy; group.rotation.x = Math.max(-0.9, Math.min(0.9, group.rotation.x + vx));
+    drag.x = e.clientX; drag.y = e.clientY;
+  });
+  const end = e => { if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return; drag = null; host.classList.remove('is-dragging'); };
+  addEventListener('pointerup', end); addEventListener('pointercancel', end);
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { rootMargin: '200px' }).observe(host);
+
+  const loop = () => {
+    requestAnimationFrame(loop);
+    if (!visible) return;
+    if (!drag) {
+      const target = hover ? AUTO * 0.35 : AUTO;
+      vy += (target - vy) * 0.04; vx *= 0.92;
+      group.rotation.y += vy;
+      group.rotation.x += (0.35 - group.rotation.x) * 0.01 + vx;
+    }
+
+    renderer.render(scene, camera);
+  };
+  loop();
+})();
+
+/* Flags: slow carousel, all the same size, fading toward the edges */
+(function () {
+  const box = document.querySelector('.flags'), track = document.getElementById('flags-track');
+  if (!box || !track) return;
+  const flags = [...track.children];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let x = 0, last = performance.now(), visible = true;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(box);
+  const frame = now => {
+    requestAnimationFrame(frame);
+    const dt = Math.min(64, now - last) / 1000; last = now;
+    if (!visible) return;
+    const W = box.clientWidth, gap = Math.max(170, Math.min(300, W / 4.6)), span = gap * flags.length;
+    if (!reduce) x = (x + dt * 28) % span;   // ~28px/s drift to the left
+    const big = W < 620 ? .8 : 1, small = big;   // same size throughout
+    flags.forEach((f, i) => {
+      let px = ((i * gap - x) % span + span) % span - span / 2 + gap / 2;   // position relative to the centre
+      const d = Math.min(1, Math.abs(px) / (W / 2));
+      const sc = small + (big - small) * Math.pow(1 - d, 1.6);
+      f.style.transform = `translate(${(W / 2 + px).toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
+      f.style.opacity = (1 - Math.pow(d, 2.2) * .85).toFixed(3);
+    });
+  };
+  requestAnimationFrame(frame);
+})();
+
+/* Partner logos: staggered entrance; every 5 seconds they fade out, trade places and fade back in */
+(function () {
+  const row = document.querySelector('.partners__logos');
+  if (!row || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  const items = () => [...row.children];
+  const index = () => items().forEach((el, i) => el.style.setProperty('--i', i));
+  index();
+  row.classList.add('st-armed');
+  let visible = false;
+  new IntersectionObserver(es => es.forEach(e => {
+    visible = e.isIntersecting;
+    if (e.intersectionRatio >= 0.25) requestAnimationFrame(() => row.classList.add('st-in'));
+    else if (!e.isIntersecting) row.classList.remove('st-in');
+  }), { threshold: [0, 0.25] }).observe(row);
+  const shuffle = a => { const b = a.slice(); do { for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } } while (b.every((x, i) => x === a[i])); return b; };
+  setInterval(() => {
+    if (!visible || !row.classList.contains('st-in') || document.hidden) return;
+    const els = items();
+    els.forEach((el, i) => setTimeout(() => el.classList.add('out'), i * 60));
+    setTimeout(() => {
+      shuffle(els).forEach(el => row.appendChild(el));
+      index();
+      items().forEach((el, i) => setTimeout(() => el.classList.remove('out'), i * 80));
+    }, els.length * 60 + 420);
+  }, 5000);
+})();
+
+/* Word-by-word slide in for every heading marked data-words */
+(function () {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-words]').forEach(el => {
+    const lines = el.innerHTML.split(/<br\s*\/?>/i).map(h => { const d = document.createElement('div'); d.innerHTML = h; return d.textContent.replace(/\s+/g, ' ').trim(); });
+    el.setAttribute('aria-label', lines.join(' '));
+    const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    let i = 0;
+    el.innerHTML = lines.map(line => line.split(' ').map(w => `<span class="ww-word" aria-hidden="true" style="--i:${i++}">${esc(w)}</span>`).join(' ')).join('<br>');
+    if (reduce || !('IntersectionObserver' in window)) return;
+    el.classList.add('ww-armed');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio >= 0.5) requestAnimationFrame(() => el.classList.add('ww-in'));
+      else if (!e.isIntersecting) el.classList.remove('ww-in');    // fully off screen: replay next time
+    }), { threshold: [0, 0.5] });
+    const start = () => io.observe(el);
+    if (document.documentElement.classList.contains('is-loading')) addEventListener('splashdone', start, { once: true }); else start();
+  });
+})();
+
+/* Featured marquee: auto-scrolls ~30px/s, pauses on hover, drag left/right with momentum, loops seamlessly */
+(function () {
+  const t = document.getElementById('press-track'); if (!t) return;
+  const box = t.parentElement;
+  [...t.children].forEach(n => { const c = n.cloneNode(true); c.setAttribute('aria-hidden', 'true'); t.appendChild(c); });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let setW = t.scrollWidth / 2, x = 0, v = 0, hover = false, drag = null, last = performance.now();
+  addEventListener('resize', () => { setW = t.scrollWidth / 2; });
+  const wrap = () => { if (x <= -setW) x += setW; if (x > 0) x -= setW; };
+  const frame = now => {
+    const dt = Math.min(64, now - last) / 1000; last = now;
+    if (!drag) {
+      const auto = (hover || reduce) ? 0 : -30;
+      v += (auto - v) * Math.min(1, dt * (Math.abs(v) > 60 ? 2.5 : 4));   // momentum eases back to the auto speed
+      x += v * dt;
+    }
+    wrap();
+    t.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  box.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hover = true; });
+  box.addEventListener('pointerleave', () => { hover = false; });
+  box.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    drag = { id: e.pointerId, px: e.clientX, py: e.clientY, t: performance.now(), on: false };
+  });
+  addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.px, now = performance.now();
+    if (!drag.on) {
+      if (Math.abs(dx) < 4) return;
+      if (e.pointerType !== 'mouse' && Math.abs(e.clientY - drag.py) > Math.abs(dx)) { drag = null; return; }   // vertical swipe: let the page scroll
+      drag.on = true; box.classList.add('is-dragging'); box.setPointerCapture?.(e.pointerId);
+    }
+    x += dx; v = dx / Math.max(1, now - drag.t) * 1000;
+    drag.px = e.clientX; drag.t = now;
+  });
+  const end = e => { if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return; if (performance.now() - drag.t > 80) v = 0; drag = null; box.classList.remove('is-dragging'); };
+  addEventListener('pointerup', end); addEventListener('pointercancel', end);
+})();
+</script>
+
+</html>
