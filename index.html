@@ -170,11 +170,24 @@ h1, h2, h3, p { margin: 0; }
 .accounts { padding-block: 120px; display: flex; flex-direction: column; align-items: center; gap: 72px; }
 .title-64 { font-size: clamp(40px, 4.23vw, 64px); line-height: 1; letter-spacing: -.04em; color: var(--ink); }
 .accounts .title-64 { text-align: center; max-width: 1100px; text-wrap: balance; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
-.flags { position: relative; width: 100%; max-width: 1512px; height: 150px; overflow: hidden; }
-.flags__track { position: absolute; inset: 0; }
-/* each flag is placed by script; all the same size, fading toward the edges */
-.flag { position: absolute; left: 0; top: 50%; width: 100px; height: 100px; margin: -50px 0 0 -50px; clip-path: polygon(17.4% 0,82.6% 0,100% 17.4%,100% 82.6%,82.6% 100%,17.4% 100%,0 82.6%,0 17.4%);   /* Figma flag mask: 17.6px cut on a 101px tile */ will-change: transform, opacity; }
-.flag svg { display: block; width: 100%; height: 100%; }
+/* currency carousel: the flags travel round a circle seen side-on (front flag biggest, back half hidden).
+   The currency name stays fixed under the front spot and blurs from one code to the next as each flag passes over it. */
+.flags { position: relative; width: 100%; max-width: 1512px; height: 300px; overflow: hidden; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%); }
+.flags.dragging { cursor: grabbing; }
+.flags:focus-visible { outline: 2px solid var(--orange); outline-offset: -2px; }
+.flags__ring { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.cflag { position: absolute; left: 50%; top: 24px; width: 150px; height: 150px; margin-left: -75px; transform-origin: 50% 50%; will-change: transform, opacity; }
+/* brand shield: square top, cuts on both bottom corners */
+.cflag svg { display: block; width: 100%; height: 100%; clip-path: polygon(0 0, 100% 0, 100% 86%, 88% 100%, 12% 100%, 0 86%); }
+.flags__name { --blur: 5px; --dur: 1300ms; --gap: 60ms; --grow: 1.29; --shrink: .807;
+  position: absolute; left: 50%; top: 196px; min-width: 4em; height: 1.1em; transform: translateX(-50%); pointer-events: none; z-index: 200;
+  font-family: var(--font-sans); font-size: 44px; font-weight: 450; letter-spacing: -.02em; line-height: 1.1; color: var(--ink); }
+.flags__name span { display: block; text-align: center; transition: transform calc(var(--dur) * 1.15) cubic-bezier(.2, .8, .2, 1), opacity calc(var(--dur) * .85) ease, filter var(--dur) ease; }
+.flags__name span:not(.old) { transition-delay: var(--gap); }
+.flags__name span.old { position: absolute; inset: 0; }
+.flags__name span.in { transform: scale(var(--grow)); opacity: 0; filter: blur(var(--blur)); }
+.flags__name span.out { transform: scale(var(--shrink)); opacity: 0; filter: blur(var(--blur)); }
 
 /* ---------- Product rows ---------- */
 .stack { position: relative; }
@@ -434,7 +447,8 @@ html.is-loading :is(.load-down, .load-up, .load-rise) { animation-play-state: pa
   .partners__logos { gap: 28px 36px; }
   .plogo { zoom: .85; }
   .accounts { padding-block: 72px; gap: 40px; }
-  .flags { height: 110px; }
+  .flags { height: 170px; }
+  .cflag { top: -10px; }
   .product { padding-block: 56px; }
 
   .featured { padding-block: 96px 72px; }
@@ -522,7 +536,7 @@ html.is-loading :is(.load-down, .load-up, .load-rise) { animation-play-state: pa
 
   <section class="accounts" aria-labelledby="t-accounts">
     <h2 class="display title-64" id="t-accounts" data-words>Open &amp; Operate Virtual<br>Accounts in your business name</h2>
-    <div class="flags" data-anim="fade" aria-label="Accounts in GBP, EUR, NGN and USD"><div class="flags__track" id="flags-track"><span class="flag" aria-hidden="true" title="GBP"><svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></span><span class="flag" aria-hidden="true" title="EUR"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></span><span class="flag" aria-hidden="true" title="NGN"><svg viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></span><span class="flag" aria-hidden="true" title="USD"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></span><span class="flag" aria-hidden="true" title="GBP"><svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></span><span class="flag" aria-hidden="true" title="EUR"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></span><span class="flag" aria-hidden="true" title="NGN"><svg viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></span><span class="flag" aria-hidden="true" title="USD"><svg viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></span></div></div>
+    <div class="flags" id="flags" data-anim="fade" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Accounts in GBP, EUR, NGN and USD. Drag or use the arrow keys to turn."><ul class="flags__ring" id="flags-ring"><li class="cflag" data-code="GBP" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></li><li class="cflag" data-code="EUR" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></li><li class="cflag" data-code="NGN" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></li><li class="cflag" data-code="USD" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></li><li class="cflag" data-code="GBP" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="18"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></svg></li><li class="cflag" data-code="EUR" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="90" height="90" fill="#003399"/><g fill="#FFCC00"><path transform="translate(45.00 18.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(72.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(68.38 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(58.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(45.00 72.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 68.38)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 58.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(18.00 45.00)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(21.62 31.50)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/><path transform="translate(31.50 21.62)" d="M0-4.2L1.2-1.3 4.2-1.3 1.8.5 2.6 3.4 0 1.7-2.6 3.4-1.8.5-4.2-1.3-1.2-1.3Z"/></g></svg></li><li class="cflag" data-code="NGN" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="30" height="90" fill="#008751"/><rect x="30" width="30" height="90" fill="#fff"/><rect x="60" width="30" height="90" fill="#008751"/></svg></li><li class="cflag" data-code="USD" aria-hidden="true"><svg preserveAspectRatio="none" viewBox="0 0 90 90"><rect width="90" height="90" fill="#fff"/><rect y="0.00" width="90" height="6.92" fill="#B22234"/><rect y="13.85" width="90" height="6.92" fill="#B22234"/><rect y="27.69" width="90" height="6.92" fill="#B22234"/><rect y="41.54" width="90" height="6.92" fill="#B22234"/><rect y="55.38" width="90" height="6.92" fill="#B22234"/><rect y="69.23" width="90" height="6.92" fill="#B22234"/><rect y="83.08" width="90" height="6.92" fill="#B22234"/><rect width="40" height="48.46" fill="#3C3B6E"/><g fill="#fff"><circle cx="4.0" cy="4.5" r="1.2"/><circle cx="10.4" cy="4.5" r="1.2"/><circle cx="16.8" cy="4.5" r="1.2"/><circle cx="23.2" cy="4.5" r="1.2"/><circle cx="29.6" cy="4.5" r="1.2"/><circle cx="36.0" cy="4.5" r="1.2"/><circle cx="7.2" cy="9.4" r="1.2"/><circle cx="13.6" cy="9.4" r="1.2"/><circle cx="20.0" cy="9.4" r="1.2"/><circle cx="26.4" cy="9.4" r="1.2"/><circle cx="32.8" cy="9.4" r="1.2"/><circle cx="4.0" cy="14.3" r="1.2"/><circle cx="10.4" cy="14.3" r="1.2"/><circle cx="16.8" cy="14.3" r="1.2"/><circle cx="23.2" cy="14.3" r="1.2"/><circle cx="29.6" cy="14.3" r="1.2"/><circle cx="36.0" cy="14.3" r="1.2"/><circle cx="7.2" cy="19.2" r="1.2"/><circle cx="13.6" cy="19.2" r="1.2"/><circle cx="20.0" cy="19.2" r="1.2"/><circle cx="26.4" cy="19.2" r="1.2"/><circle cx="32.8" cy="19.2" r="1.2"/><circle cx="4.0" cy="24.1" r="1.2"/><circle cx="10.4" cy="24.1" r="1.2"/><circle cx="16.8" cy="24.1" r="1.2"/><circle cx="23.2" cy="24.1" r="1.2"/><circle cx="29.6" cy="24.1" r="1.2"/><circle cx="36.0" cy="24.1" r="1.2"/><circle cx="7.2" cy="29.0" r="1.2"/><circle cx="13.6" cy="29.0" r="1.2"/><circle cx="20.0" cy="29.0" r="1.2"/><circle cx="26.4" cy="29.0" r="1.2"/><circle cx="32.8" cy="29.0" r="1.2"/><circle cx="4.0" cy="33.9" r="1.2"/><circle cx="10.4" cy="33.9" r="1.2"/><circle cx="16.8" cy="33.9" r="1.2"/><circle cx="23.2" cy="33.9" r="1.2"/><circle cx="29.6" cy="33.9" r="1.2"/><circle cx="36.0" cy="33.9" r="1.2"/><circle cx="7.2" cy="38.8" r="1.2"/><circle cx="13.6" cy="38.8" r="1.2"/><circle cx="20.0" cy="38.8" r="1.2"/><circle cx="26.4" cy="38.8" r="1.2"/><circle cx="32.8" cy="38.8" r="1.2"/><circle cx="4.0" cy="43.7" r="1.2"/><circle cx="10.4" cy="43.7" r="1.2"/><circle cx="16.8" cy="43.7" r="1.2"/><circle cx="23.2" cy="43.7" r="1.2"/><circle cx="29.6" cy="43.7" r="1.2"/><circle cx="36.0" cy="43.7" r="1.2"/></g></svg></li></ul><div class="flags__name" id="flags-name" aria-live="polite"><span>GBP</span></div></div>
   </section>
 
   <div class="stack">
@@ -1026,30 +1040,90 @@ const DRAWER = {
   loop();
 })();
 
-/* Flags: slow carousel, all the same size, fading toward the edges */
+/* Flags: circular carousel. The flags go round a ring seen side-on, spinning right-to-left; drag (or flick) to turn it.
+   The name under the front spot stays put and blurs to whichever flag is on top of it. */
 (function () {
-  const box = document.querySelector('.flags'), track = document.getElementById('flags-track');
-  if (!box || !track) return;
-  const flags = [...track.children];
+  const stage = document.getElementById('flags'), name = document.getElementById('flags-name');
+  if (!stage || !name) return;
+  const items = [...stage.querySelectorAll('.cflag')];
+  const N = items.length, STEP = Math.PI * 2 / N;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let x = 0, last = performance.now(), visible = true;
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(box);
-  const frame = now => {
-    requestAnimationFrame(frame);
-    const dt = Math.min(64, now - last) / 1000; last = now;
-    if (!visible) return;
-    const W = box.clientWidth, gap = Math.max(170, Math.min(300, W / 4.6)), span = gap * flags.length;
-    if (!reduce) x = (x + dt * 28) % span;   // ~28px/s drift to the left
-    const big = W < 620 ? .8 : 1, small = big;   // same size throughout
-    flags.forEach((f, i) => {
-      let px = ((i * gap - x) % span + span) % span - span / 2 + gap / 2;   // position relative to the centre
-      const d = Math.min(1, Math.abs(px) / (W / 2));
-      const sc = small + (big - small) * Math.pow(1 - d, 1.6);
-      f.style.transform = `translate(${(W / 2 + px).toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
-      f.style.opacity = (1 - Math.pow(d, 2.2) * .85).toFixed(3);
+  const MIN_SCALE = 0.42, FADE_FROM = 0.42, FADE_TO = 0.78;   // back half of the ring hidden
+  const AUTO = 0.0032, DIR = -1;                               // speed per frame; -1 = front flags travel to the left
+  const NAME_MS = 1300;                                        // keep in step with --dur on .flags__name
+  let angle = 0, vel = 0, drag = null, lastInteract = -1e9, visible = true, current = items[0].dataset.code;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(stage);
+
+  const radius = () => Math.max(150, Math.min(560, stage.clientWidth * 0.42));
+  const baseScale = () => Math.max(0.5, Math.min(1, stage.clientWidth / 1100));
+
+  function setName(code) {
+    if (code === current) return;
+    current = code;
+    const old = name.querySelector('span:not(.old)');
+    const next = document.createElement('span'); next.textContent = code;
+    name.querySelectorAll('.old').forEach(n => n.remove());
+    old.classList.add('old');
+    next.classList.add('in'); name.appendChild(next);
+    requestAnimationFrame(() => { old.classList.add('out'); next.classList.remove('in'); });
+    setTimeout(() => old.remove(), NAME_MS * 1.2 + 50);
+  }
+
+  function layout() {
+    const R = radius(), sm = baseScale();
+    let best = -2, front = items[0];
+    items.forEach((el, i) => {
+      const a = angle + i * STEP, depth = (Math.cos(a) + 1) / 2;
+      const s = (MIN_SCALE + (1 - MIN_SCALE) * Math.pow(depth, 1.4)) * sm;
+      const t = Math.min(1, Math.max(0, (depth - FADE_FROM) / (FADE_TO - FADE_FROM)));
+      const o = t * t * (3 - 2 * t);
+      el.style.transform = `translate3d(${(Math.sin(a) * R).toFixed(1)}px, 0px, 0) scale(${s.toFixed(3)})`;
+      el.style.opacity = o.toFixed(3);
+      el.style.zIndex = Math.round(depth * 100);
+      el.style.visibility = o < 0.01 ? 'hidden' : '';
+      if (Math.cos(a) > best) { best = Math.cos(a); front = el; }
     });
+    // the fixed name sits just under the front flag, whatever size the flags are at this screen width
+    const top = parseFloat(getComputedStyle(items[0]).top) || 24;
+    name.style.top = (top + 75 + 75 * sm + 20 * sm).toFixed(1) + 'px';
+    name.style.fontSize = (44 * sm).toFixed(1) + 'px';
+    setName(front.dataset.code);
+  }
+
+  function tick() {
+    requestAnimationFrame(tick);
+    if (!visible && !drag) return;
+    if (!drag) {
+      vel *= 0.95;                                                                  // coast after a flick
+      const resume = Math.min(1, Math.max(0, (performance.now() - lastInteract - 900) / 1200));
+      angle += vel + (reduce ? 0 : AUTO * DIR * resume);
+    }
+    layout();
+  }
+
+  stage.addEventListener('pointerdown', e => {
+    drag = { x: e.clientX, a: angle, lastX: e.clientX, lastT: performance.now(), v: 0 };
+    vel = 0; stage.setPointerCapture(e.pointerId); stage.classList.add('dragging');
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const R = radius(), now = performance.now();
+    angle = drag.a + (e.clientX - drag.x) / R;
+    drag.v = ((e.clientX - drag.lastX) / R) / Math.max(1, now - drag.lastT) * 16;
+    drag.lastX = e.clientX; drag.lastT = now;
+  });
+  const end = () => {
+    if (!drag) return;
+    vel = Math.max(-0.12, Math.min(0.12, drag.v));
+    drag = null; lastInteract = performance.now(); stage.classList.remove('dragging');
   };
-  requestAnimationFrame(frame);
+  stage.addEventListener('pointerup', end);
+  stage.addEventListener('pointercancel', end);
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { vel = -0.06; lastInteract = performance.now(); }
+    if (e.key === 'ArrowRight') { vel = 0.06; lastInteract = performance.now(); }
+  });
+  layout(); requestAnimationFrame(tick);
 })();
 
 /* Partner logos: staggered entrance; every 5 seconds they fade out, trade places and fade back in */
